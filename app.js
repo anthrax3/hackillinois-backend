@@ -10,7 +10,7 @@ app.get('/tjena', function(req, res){
   res.send('hello world');
 })
 
-var server = app.listen(443, function () {
+var server = app.listen(8080, function () {
 	var host = server.address().address
 	var port = server.address().port
 	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
