@@ -1,15 +1,16 @@
 var express = require('express')
+var socketio = require('socket.io')
 var app = express()
 
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/');
+var postItRef = rootRef.child('post-its')
 
-// Get all post-its with url
+// Get post with post id
 app.get('/api/post-it/:id', function (req, res) {
-		console.log("GET req to get post-it")
+	console.log("GET req to get post-it")
 	var id = req.params.id
-	var postItRef = rootRef.child('post-its').child(id)
-	postItRef.on("value", function(snapshot) {
+	postItRef.child(id).on("value", function(snapshot) {
 		res.status(200)
 		res.send(snapshot.val())
 	}, function (errorObject) {
@@ -17,30 +18,15 @@ app.get('/api/post-it/:id', function (req, res) {
 	});
 })
 
-// Get all comments that have post-it id
-app.get('/api/comment/:id', function (req, res) {
-	console.log("GET req to get comment")
-	var id = req.params.id
-	var postItRef = rootRef.child('comments').child(id)
-	postItRef.on("value", function(snapshot) {
-		res.status(200)
-		res.send(snapshot.val())
-	}, function (errorObject) {
-	  console.log("The read failed: " + errorObject.code);
-	});
-}) 
-
 // Create post-it
 app.post('/api/post-it', function (req, res) {
 	console.log("POST req to create post-it")
-	var postItRef = rootRef.child('post-its')
-	// var domElement = req.param.dom
-	// var url = req.param.url
+	var domElement = req.query.dom
+	var url = req.query.url
 	postItRef.push({
-		domElement: 'dom',
-		url: 'url'
+		domElement: domElement,
+		url: url
 	});
-	var postID = postItRef.key();
 	res.status(200)
 	res.send()
 })
@@ -48,32 +34,34 @@ app.post('/api/post-it', function (req, res) {
 // Create comment on post-it
 app.post('/api/comment', function (req, res) {
 	console.log("POST req to create comment")
-	var commentsRef = rootRef.child('comments')
-	// var username = req.param.username
-	// var comment = req.param.comment
-	commentsRef.push({
-		username: 'username',
-		comment: 'comment'
+	var username = req.query.username
+	var comment = req.query.comment
+	var postId = req.query.postId
+	var date = new Date()
+	var newPostItRef = postItRef.child(postId).child('comments').push({
+		username: username,
+		comment: comment,
+		date: date.getTime()
 	});
-	var commentID = commentsRef.key();
 	res.status(200)
 	res.send()
 })
 
 // Delete post-it
 app.delete('/api/post-it/:id', function (req, res) {
-	console.log("DELETE req to delete post-it")	
+	console.log("DELETE req to delete post-it")		
 	var id = req.params.id
-	var postItRef = rootRef.child('post-its').child(id).remove()
+	postItRef.child(id).remove()
 	res.status(200)
 	res.send()
 })
 
 // Delete comment
-app.delete('/api/comment/:id', function (req, res) {
+app.delete('/api/comment/', function (req, res) {
 	console.log("DELETE req to delete comment")	
-	var id = req.params.id
-	var postItRef = rootRef.child('comments').child(id).remove()
+	var id = req.query.id
+	var postId = req.query.postId
+	postItRef.child(postId).child('comments').child(id).remove()
 	res.status(200)
 	res.send()
 })
