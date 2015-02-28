@@ -43,8 +43,8 @@ app.get('/api/post-it/:url', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
-	var domElement = req.query.dom
-	var url = req.query.url
+	var domElement = req.body.dom
+	var url = req.body.url
 	var newPostIt = {
 		domElement: domElement,
 		url: url
