@@ -11,6 +11,30 @@ app.get('/tjena', function(req, res){
   res.send('hello world');
 })
 
+// GET ALL POST-IT ON URL	
+app.get('/api/post-it/:url', function(req, res) {
+	console.log("GET req to get all post-it with url")
+	var postItList = []
+	var i = 0
+	postItRef.on("value", function(snapshot) {
+		var listLenght = snapshot.numChildren()
+		snapshot.forEach(function(childSnapshot) {
+		  var postIt = childSnapshot.val();
+		  if (postIt.url == req.params.url) {
+		  	postItList.push(postIt)
+		  }
+		  if (i == listLenght - 1) {
+			  console.log('ASDASDASDASDASDASD' + postItList)
+				io.emit('GetAllPostItUrl', postItList)
+		  } else {
+	  		i++	
+		  }
+		});
+	}, function (errorObject) {
+	  console.log("The read failed: " + errorObject.code)
+	})	
+})
+
 var server = app.listen(process.env.PORT || 8080, function () {
 	var host = server.address().address
 	var port = server.address().port
@@ -20,44 +44,9 @@ var server = app.listen(process.env.PORT || 8080, function () {
 var io = socketio.listen(server)
 io.on('connection', function(socket){
 
-	// GET POST-IT
-	socket.on('GetPostIt', function(data){
-		console.log("GET req to get post-it")
-		var id = data.id
-		postItRef.child(id).on("value", function(snapshot) {
-			io.emit('GetPostIt', snapshot.val())
-		}, function (errorObject) {
-		  console.log("The read failed: " + errorObject.code)
-		})	
-	})	
-
-		// GET ALL POST-IT ON URL
-	socket.on('GetAllPostItUrl', function(data){
-		console.log("GET req to get all post-it with url")
-		var postItList = []
-		var i = 0
-		postItRef.on("value", function(snapshot) {
-			var listLenght = snapshot.numChildren()
-			snapshot.forEach(function(childSnapshot) {
-			  var postIt = childSnapshot.val();
-			  if (postIt.url == data.url) {
-			  	postItList.push(postIt)
-			  }
-			  if (i == listLenght - 1) {
-				  console.log('ASDASDASDASDASDASD' + postItList)
-					io.emit('GetAllPostItUrl', postItList)
-			  } else {
-		  		i++	
-			  }
-			});
-		}, function (errorObject) {
-		  console.log("The read failed: " + errorObject.code)
-		})	
-	})
-
 	// POST-IT CREATION
 	socket.on('CreatePostIt', function(data){
-  	console.log("POST req to create post-it")
+  	console.log("Socket.io broadcast for post-it creation")
 		var domElement = data.dom
 		var url = data.url
 		postItRef.push({
@@ -68,7 +57,7 @@ io.on('connection', function(socket){
 
 	// COMMENT CREATION
 	socket.on('CreateComment', function(data){
-		console.log("POST req to create comment")
+		console.log("Socket.io broadcast for comment creation")
 		var username = data.username
 		var comment = data.comment
 		var postId = data.postId
@@ -82,14 +71,14 @@ io.on('connection', function(socket){
 
 	// POST-IT DELETION
 	socket.on('DeletePostIt', function(data){
-		console.log("DELETE req to delete post-it")		
+		console.log("Socket.io broadcast for post-it deletion")		
 		var id = data.id
 		postItRef.child(id).remove()
 	})
 
 	// COMMENT DELETION
 	socket.on('DeleteComment', function(data){
-		console.log("DELETE req to delete comment")	
+		console.log("Socket.io broadcast for comment deletion")	
 		var id = data.id
 		var postId = data.postId
 		postItRef.child(postId).child('comments').child(id).remove()
