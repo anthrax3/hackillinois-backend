@@ -6,13 +6,17 @@ var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
 
-var server = app.listen(3000, function () {
+app.get('/tjena', function(req, res){
+  res.send('hello world');
+})
+
+var server = app.listen(443, function () {
 	var host = server.address().address
 	var port = server.address().port
 	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
 })
 
-var io = socketio.listen(server);
+var io = socketio.listen(server)
 io.on('connection', function(socket){
 
 	// GET POST-IT
@@ -21,10 +25,9 @@ io.on('connection', function(socket){
 		var id = data.id
 		postItRef.child(id).on("value", function(snapshot) {
 			io.emit('GetPostIt', snapshot.val())
-			}, function (errorObject) {
-			  console.log("The read failed: " + errorObject.code)
-			})
-		})		
+		}, function (errorObject) {
+		  console.log("The read failed: " + errorObject.code)
+		})	
 	})
 
 	// POST-IT CREATION
