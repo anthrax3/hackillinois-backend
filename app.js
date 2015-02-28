@@ -52,7 +52,7 @@ app.post('/api/post-it/', function(req, res) {
 	var domElement = req.body.dom
 	var url = req.body.url
 	var newPostIt = {
-		domElement: 'tjena',
+		domElement: domElement,
 		url: url
 	}
 	postItRef.push(newPostIt)
