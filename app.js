@@ -43,16 +43,20 @@ app.get('/api/post-it/:url', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
-	var domElement = req.body.dom
-	var url = req.body.url
-	var newPostIt = {
-		domElement: domElement,
-		url: url
-	}
-	postItRef.push(newPostIt)
-	io.emit('NewPostItCreated', newPostIt)
-	res.status(200)
-	res.send()
+	var body = ''
+	  req.on('data',function(data){ body+=data; } );
+    req.on('end' ,function(){
+			var domElement = req.body.dom
+			var url = req.body.url
+			var newPostIt = {
+				domElement: domElement,
+				url: url
+			}
+			postItRef.push(newPostIt)
+			io.emit('NewPostItCreated', newPostIt)
+			res.status(200)
+			res.send()
+		})
 })
 
 var server = app.listen(process.env.PORT || 8080, function () {
