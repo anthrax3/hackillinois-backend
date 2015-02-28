@@ -37,15 +37,13 @@ app.get('/api/post-it/get', function(req, res) {
 			  if (i == listLenght - 1) {
 					res.status(200)
 					res.send(postItList)
+					break
 			  }
 	  		i++		
-			});
-		} else {
-			res.status(200)
-			res.send()
+			})
 		}
 	}, function (errorObject) {
-	  console.log('The read failed: ' + errorObject.code)
+	  console.log('The read failed: ' + errorObject.code)	
 	})	
 })
 
