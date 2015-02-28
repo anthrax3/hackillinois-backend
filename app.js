@@ -31,6 +31,23 @@ io.on('connection', function(socket){
 		})	
 	})
 
+		// GET ALL POST-IT ON URL
+	socket.on('GetAllPostItUrl', function(data){
+		console.log("GET req to get all post-it with url")
+		postItRef.on("value", function(snapshot) {
+			var url = data.url
+			var postItList = []
+			for (var i = 0; i < snapshot.val().lenght; i++) {
+				if (snapshot.val()[i].url == url) {
+					postItList.push(snapshot.val()[i])
+				}
+			}
+			io.emit('GetAllPostItUrl', postItList)
+		}, function (errorObject) {
+		  console.log("The read failed: " + errorObject.code)
+		})	
+	})
+
 	// POST-IT CREATION
 	socket.on('CreatePostIt', function(data){
   	console.log("POST req to create post-it")
