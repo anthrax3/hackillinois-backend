@@ -26,8 +26,8 @@ app.get('/api/post-it/:url', function(req, res) {
 		  }
 		  if (i == listLenght - 1) {
 			  console.log('ASDASDASDASDASDASD' + postItList)
-				req.status(200)
-				req.send(postItList)
+				res.status(200)
+				res.send(postItList)
 		  } else {
 	  		i++	
 		  }
