@@ -2,7 +2,11 @@ var express = require('express')
 var socketio = require('socket.io')
 var app = express()
 
-// var bodyParser = require('bodyParser')
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
@@ -45,10 +49,10 @@ app.get('/api/post-it/:url', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
-	var domElement = req.query.dom
-	var url = req.query.url
+	var domElement = req.body.dom
+	var url = req.body.url
 	var newPostIt = {
-		domElement: domElement,
+		domElement: 'tjena',
 		url: url
 	}
 	postItRef.push(newPostIt)
