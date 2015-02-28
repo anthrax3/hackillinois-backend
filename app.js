@@ -26,7 +26,7 @@ app.get('/api/post-it/get', function(req, res) {
 	console.log('GET req to get all post-it with url')
 	var postItList = []
 	var i = 0
-	postItRef.on('value', function(snapshot) {
+	postItRef.once('value', function(snapshot) {
 		var listLenght = snapshot.numChildren()
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
