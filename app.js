@@ -14,10 +14,10 @@ app.get('/tjena', function(req, res){
 
 // GET ALL POST-IT ON URL	
 app.get('/api/post-it/:url', function(req, res) {
-	console.log('ET req to get all post-it with url')
+	console.log('GET req to get all post-it with url')
 	var postItList = []
 	var i = 0
-	postItRef.on("value", function(snapshot) {
+	postItRef.on('value', function(snapshot) {
 		var listLenght = snapshot.numChildren()
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
@@ -36,7 +36,7 @@ app.get('/api/post-it/:url', function(req, res) {
 			res.send()
 		}
 	}, function (errorObject) {
-	  console.log("The read failed: " + errorObject.code)
+	  console.log('The read failed: ' + errorObject.code)
 	})	
 })
 
@@ -66,7 +66,7 @@ io.on('connection', function(socket){
 
 	// COMMENT CREATION
 	socket.on('CreateComment', function(data){
-		console.log("Socket.io broadcast for comment creation")
+		console.log('Socket.io broadcast for comment creation')
 		var username = data.username
 		var comment = data.comment
 		var postId = data.postId
@@ -80,14 +80,14 @@ io.on('connection', function(socket){
 
 	// POST-IT DELETION
 	socket.on('DeletePostIt', function(data){
-		console.log("Socket.io broadcast for post-it deletion")		
+		console.log('Socket.io broadcast for post-it deletion')		
 		var id = data.id
 		postItRef.child(id).remove()
 	})
 
 	// COMMENT DELETION
 	socket.on('DeleteComment', function(data){
-		console.log("Socket.io broadcast for comment deletion")	
+		console.log('Socket.io broadcast for comment deletion')	
 		var id = data.id
 		var postId = data.postId
 		postItRef.child(postId).child('comments').child(id).remove()
