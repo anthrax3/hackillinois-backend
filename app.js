@@ -50,15 +50,15 @@ var io = socketio.listen(server)
 io.on('connection', function(socket){
 
 	// POST-IT CREATION
-	socket.on('CreatePostIt', function(data){
-  	console.log("Socket.io broadcast for post-it creation")
-		var domElement = data.dom
-		var url = data.url
-		postItRef.push({
-			domElement: domElement,
-			url: url
-		})
-	})
+	// socket.on('CreatePostIt', function(data){
+ //  	console.log("Socket.io broadcast for post-it creation")
+	// 	var domElement = data.dom
+	// 	var url = data.url
+	// 	postItRef.push({
+	// 		domElement: domElement,
+	// 		url: url
+	// 	})
+	// })
 
 	// COMMENT CREATION
 	socket.on('CreateComment', function(data){
