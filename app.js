@@ -25,12 +25,10 @@ app.get('/api/post-it/:url', function(req, res) {
 		  	postItList.push(postIt)
 		  }
 		  if (i == listLenght - 1) {
-			  console.log('ASDASDASDASDASDASD' + postItList)
 				res.status(200)
 				res.send(postItList)
-		  } else {
-	  		i++	
 		  }
+  		i++		
 		});
 	}, function (errorObject) {
 	  console.log("The read failed: " + errorObject.code)
