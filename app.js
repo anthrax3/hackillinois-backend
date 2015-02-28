@@ -45,6 +45,7 @@ io.on('connection', function(socket){
 					postItList.push(allPostItList[i])
 				}
 			}
+			console.log('ASDASDASDASDASDASD' + postItList)
 			io.emit('GetAllPostItUrl', postItList)
 		}, function (errorObject) {
 		  console.log("The read failed: " + errorObject.code)
