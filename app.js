@@ -51,6 +51,8 @@ app.post('api/post-it/', function(req, res) {
 	}
 	postItRef.push(newPostIt)
 	io.emit('NewPostItCreated', newPostIt)
+	res.status(200)
+	res.send()
 })
 
 var server = app.listen(process.env.PORT || 8080, function () {
