@@ -9,6 +9,8 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
 
+var WORKERS = process.env.WEB_CONCURRENCY || 1;
+
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
@@ -20,7 +22,7 @@ app.get('/tjena', function(req, res){
 })
 
 // GET ALL POST-IT ON URL	
-app.get('/api/post-it/', function(req, res) {
+app.get('/api/post-it/get', function(req, res) {
 	console.log('GET req to get all post-it with url')
 	var postItList = []
 	var i = 0
