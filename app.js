@@ -11,7 +11,7 @@ app.get('/tjena', function(req, res){
   res.send('hello world');
 })
 
-var server = app.listen(process.env.PORT, function () {
+var server = app.listen(process.env.PORT || 5000, function () {
 	var host = server.address().address
 	var port = server.address().port
 	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
