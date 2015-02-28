@@ -52,14 +52,46 @@ app.get('/api/post-it/', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
+	var dom = req.body.dom
+	var url = req.body.url
 	var newPostIt = {
-		domElement: req.body.dom,
-		url: req.body.url
+		domElement: dom,
+		url: url
 	}
-	postItRef.push(newPostIt)
-	io.emit('NewPostItCreated', newPostIt)
+	var newPostItId = postItRef.push(newPostIt)
+	var sendData = {
+		newPostIt: newPostIt,
+		postId: newPostItId.key()
+	}
+	io.broadcast.to(url).emit('NewPostItCreated', sendData)
 	res.status(200)
 	res.send()
+})
+
+// COMMENT CREATION
+app.post('api/comment/', function(req, res) {
+		console.log('POST req to create comment')
+		var username = req.body.username
+		var comment = req.body.comment
+		var postId = req.body.postId
+		var date = new Date()
+		var newComment = {
+			username: username,
+			comment: comment,
+			date: date.getTime()
+		}
+		postItRef.child(postId).child('comments').push(newComment)
+		var sendData = {
+			comment: newComment,
+			postId: postId
+		}
+		postItRef.child(postId).once('value', function(snapshot) {
+			io.broadcast.to(snapshot.val().url).emit('NewCommentCreated', sendData)
+			res.status(200)
+			res.send()
+		}, function (errorObject) {
+		  console.log('The read failed: ' + errorObject.code)	
+		})	
 })
 
 var server = app.listen(process.env.PORT || 8080, function () {
@@ -70,20 +102,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
 
 var io = socketio.listen(server)
 io.on('connection', function(socket){
-
-	// COMMENT CREATION
-	socket.on('CreateComment', function(data){
-		console.log('Socket.io broadcast for comment creation')
-		var username = data.username
-		var comment = data.comment
-		var postId = data.postId
-		var date = new Date()
-		var newPostItRef = postItRef.child(postId).child('comments').push({
-			username: username,
-			comment: comment,
-			date: date.getTime()
-		})
-	})
 
 	// POST-IT DELETION
 	socket.on('DeletePostIt', function(data){
