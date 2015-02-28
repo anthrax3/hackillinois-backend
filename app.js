@@ -34,23 +34,19 @@ io.on('connection', function(socket){
 		// GET ALL POST-IT ON URL
 	socket.on('GetAllPostItUrl', function(data){
 		console.log("GET req to get all post-it with url")
-		postItRef.on("value", function(snapshot) {
-			var allPostItList = snapshot.val()
-			console.log(allPostItList)
-			var url = data.url
-			console.log(url)
-			var postItList = []
-			console.log(allPostItList.length)
-			for (var i = 0; i < allPostItList.length; i++) {
-				if (allPostItList[i].url == url) {
-					postItList.push(allPostItList[i])
-				}
-			}
-			console.log('ASDASDASDASDASDASD' + postItList)
-			io.emit('GetAllPostItUrl', postItList)
-		}, function (errorObject) {
-		  console.log("The read failed: " + errorObject.code)
-		})	
+		var postItList = []
+		var i = 0
+		postItRef.dataSnapshot.forEach(function(childSnapshot) {
+		  var postIt = childSnapshot.val();
+		  if (postIt.url == url) {
+		  	postItList.push(postIt)
+		  }
+		  if (i == dataSnapshot.length) {
+			  console.log('ASDASDASDASDASDASD' + postItList)
+				io.emit('GetAllPostItUrl', postItList)
+		  }
+		  i++
+		});
 	})
 
 	// POST-IT CREATION
