@@ -2,6 +2,8 @@ var express = require('express')
 var socketio = require('socket.io')
 var app = express()
 
+// var bodyParser = require('bodyParser')
+
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
@@ -43,8 +45,8 @@ app.get('/api/post-it/:url', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
-	var domElement = req.body.dom
-	var url = req.body.url
+	var domElement = req.query.dom
+	var url = req.query.url
 	var newPostIt = {
 		domElement: domElement,
 		url: url
