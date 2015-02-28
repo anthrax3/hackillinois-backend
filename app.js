@@ -1,8 +1,14 @@
 var express = require('express')
 var socketio = require('socket.io')
+var bodyParser = require('body-parser');
+var multer = require('multer'); 
+
 var app = express()
 
-app.use(require('body-parser').json())
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(multer()); // for parsing multipart/form-data
+
 
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
@@ -45,11 +51,9 @@ app.get('/api/post-it/:url', function(req, res) {
 // POST-IT CREATION
 app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
-	var domElement = req.body.dom
-	var url = req.body.url
 	var newPostIt = {
-		domElement: domElement,
-		url: url
+		domElement: req.body.dom,
+		url: req.body.url
 	}
 	postItRef.push(newPostIt)
 	io.emit('NewPostItCreated', newPostIt)
