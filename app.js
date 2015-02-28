@@ -14,7 +14,7 @@ app.get('/tjena', function(req, res){
 
 // GET ALL POST-IT ON URL	
 app.get('/api/post-it/:url', function(req, res) {
-	console.log("GET req to get all post-it with url")
+	console.log('ET req to get all post-it with url')
 	var postItList = []
 	var i = 0
 	postItRef.on("value", function(snapshot) {
@@ -40,6 +40,19 @@ app.get('/api/post-it/:url', function(req, res) {
 	})	
 })
 
+// POST-IT CREATION
+app.post('api/post-it/', function(req, res) {
+	console.log('POST req to create post-it')
+	var domElement = req.query.dom
+	var url = req.query.url
+	var newPostIt = {
+		domElement: domElement,
+		url: url
+	}
+	postItRef.push(newPostIt)
+	io.emit('NewPostItCreated', newPostIt)
+})
+
 var server = app.listen(process.env.PORT || 8080, function () {
 	var host = server.address().address
 	var port = server.address().port
@@ -48,17 +61,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
 
 var io = socketio.listen(server)
 io.on('connection', function(socket){
-
-	// POST-IT CREATION
-	// socket.on('CreatePostIt', function(data){
- //  	console.log("Socket.io broadcast for post-it creation")
-	// 	var domElement = data.dom
-	// 	var url = data.url
-	// 	postItRef.push({
-	// 		domElement: domElement,
-	// 		url: url
-	// 	})
-	// })
 
 	// COMMENT CREATION
 	socket.on('CreateComment', function(data){
