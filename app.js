@@ -71,3 +71,16 @@ var server = app.listen(3000, function () {
 	var port = server.address().port
 	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
 })
+
+var io = socketio.listen(server);
+io.on('connection', function(socket){
+	socket.on('create post-it', function(data){
+	  	console.log("POST req to create post-it")
+		var domElement = data.dom
+		var url = data.url
+		postItRef.push({
+			domElement: domElement,
+			url: url
+		});
+	});
+});
