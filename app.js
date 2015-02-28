@@ -37,7 +37,7 @@ io.on('connection', function(socket){
 		var postItList = []
 		var i = 0
 		var listLenght = 5
-		postItRef.dataSnapshot.forEach(function(childSnapshot) {
+		postItRef.forEach(function(childSnapshot) {
 		  var postIt = childSnapshot.val();
 		  if (postIt.url == url) {
 		  	postItList.push(postIt)
