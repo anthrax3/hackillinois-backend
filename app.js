@@ -37,7 +37,6 @@ app.get('/api/post-it/get', function(req, res) {
 			  if (i == listLenght - 1) {
 					res.status(200)
 					res.send(postItList)
-					break
 			  }
 	  		i++		
 			})
