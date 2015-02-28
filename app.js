@@ -33,7 +33,7 @@ app.get('/api/post-it/:url', function(req, res) {
 			  	postItList.push(postIt)
 			  }
 			  if (i == listLenght - 1) {
-					// res.status(200)
+					res.status(200)
 					res.send(postItList)
 			  }
 	  		i++		
@@ -56,8 +56,8 @@ app.post('/api/post-it/', function(req, res) {
 	}
 	postItRef.push(newPostIt)
 	io.emit('NewPostItCreated', newPostIt)
-	res.status(200)
-	res.send()
+	// res.status(200)
+	// res.send()
 })
 
 var server = app.listen(process.env.PORT || 8080, function () {
