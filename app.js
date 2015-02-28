@@ -7,6 +7,7 @@ var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
 
 app.get('/tjena', function(req, res){
+	res.status(200)
   res.send('hello world');
 })
 
