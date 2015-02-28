@@ -36,7 +36,7 @@ io.on('connection', function(socket){
 		console.log("GET req to get all post-it with url")
 		var postItList = []
 		var i = 0
-		var listLenght = postItRef.numChildren()
+		var listLenght = postItRef.dataSnapshot.numChildren()
 		postItRef.dataSnapshot.forEach(function(childSnapshot) {
 		  var postIt = childSnapshot.val();
 		  if (postIt.url == url) {
