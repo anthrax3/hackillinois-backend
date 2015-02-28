@@ -19,17 +19,22 @@ app.get('/api/post-it/:url', function(req, res) {
 	var i = 0
 	postItRef.on("value", function(snapshot) {
 		var listLenght = snapshot.numChildren()
-		snapshot.forEach(function(childSnapshot) {
-		  var postIt = childSnapshot.val();
-		  if (postIt.url == req.params.url) {
-		  	postItList.push(postIt)
-		  }
-		  if (i == listLenght - 1) {
-				res.status(200)
-				res.send(postItList)
-		  }
-  		i++		
-		});
+		if (listLenght != 0) {
+			snapshot.forEach(function(childSnapshot) {
+			  var postIt = childSnapshot.val();
+			  if (postIt.url == req.params.url) {
+			  	postItList.push(postIt)
+			  }
+			  if (i == listLenght - 1) {
+					res.status(200)
+					res.send(postItList)
+			  }
+	  		i++		
+			});
+		} else {
+			res.status(200)
+			res.send()
+		}
 	}, function (errorObject) {
 	  console.log("The read failed: " + errorObject.code)
 	})	
