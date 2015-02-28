@@ -33,7 +33,7 @@ app.get('/api/post-it/:url', function(req, res) {
 			  	postItList.push(postIt)
 			  }
 			  if (i == listLenght - 1) {
-					res.status(200)
+					// res.status(200)
 					res.send(postItList)
 			  }
 	  		i++		
