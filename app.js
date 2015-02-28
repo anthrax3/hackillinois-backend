@@ -37,18 +37,22 @@ io.on('connection', function(socket){
 		var postItList = []
 		var i = 0
 		var listLenght = 5
-		postItRef.forEach(function(childSnapshot) {
-		  var postIt = childSnapshot.val();
-		  if (postIt.url == url) {
-		  	postItList.push(postIt)
-		  }
-		  if (i == listLenght - 1) {
-			  console.log('ASDASDASDASDASDASD' + postItList)
-				io.emit('GetAllPostItUrl', postItList)
-		  } else {
-	  		i++	
-		  }
-		});
+		postItRef.on("value", function(snapshot) {
+			snapShot.forEach(function(childSnapshot) {
+			  var postIt = childSnapshot.val();
+			  if (postIt.url == data.url) {
+			  	postItList.push(postIt)
+			  }
+			  if (i == listLenght - 1) {
+				  console.log('ASDASDASDASDASDASD' + postItList)
+					io.emit('GetAllPostItUrl', postItList)
+			  } else {
+		  		i++	
+			  }
+			});
+		}, function (errorObject) {
+		  console.log("The read failed: " + errorObject.code)
+		})	
 	})
 
 	// POST-IT CREATION
