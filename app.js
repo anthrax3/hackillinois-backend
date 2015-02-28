@@ -20,7 +20,7 @@ app.get('/tjena', function(req, res){
 })
 
 // GET ALL POST-IT ON URL	
-app.get('/api/post-it/:url', function(req, res) {
+app.get('/api/post-it/', function(req, res) {
 	console.log('GET req to get all post-it with url')
 	var postItList = []
 	var i = 0
@@ -29,7 +29,7 @@ app.get('/api/post-it/:url', function(req, res) {
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
 			  var postIt = childSnapshot.val();
-			  if (postIt.url == req.params.url) {
+			  if (postIt.url == req.query.url) {
 			  	postItList.push(postIt)
 			  }
 			  if (i == listLenght - 1) {
