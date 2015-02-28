@@ -29,17 +29,18 @@ io.on('connection', function(socket){
 		}, function (errorObject) {
 		  console.log("The read failed: " + errorObject.code)
 		})	
-	})
+	})	
 
 		// GET ALL POST-IT ON URL
 	socket.on('GetAllPostItUrl', function(data){
 		console.log("GET req to get all post-it with url")
 		postItRef.on("value", function(snapshot) {
+			var allPostItList = snapshot.val()
 			var url = data.url
 			var postItList = []
-			for (var i = 0; i < snapshot.val().lenght; i++) {
-				if (snapshot.val()[i].url == url) {
-					postItList.push(snapshot.val()[i])
+			for (var i = 0; i < allPostItList.lenght; i++) {
+				if (allPostItList[i].url == url) {
+					postItList.push(allPostItList[i])
 				}
 			}
 			io.emit('GetAllPostItUrl', postItList)
