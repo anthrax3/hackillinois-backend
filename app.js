@@ -40,6 +40,7 @@ io.on('connection', function(socket){
 			var url = data.url
 			console.log(url)
 			var postItList = []
+			console.log(allPostItList.length)
 			for (var i = 0; i < allPostItList.length; i++) {
 				if (allPostItList[i].url == url) {
 					postItList.push(allPostItList[i])
