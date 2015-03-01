@@ -164,7 +164,7 @@ app.post('/api/comment/', function(req, res) {
 		postId: postId
 	}
 	groupRef.child(groupId).child('posts').child(postId).once('value', function(snapshot) {
-		io.sockets.in(snapshot.val().url+groupId).emit('NewCommentCreated', sendData)
+		io.sockets.in("hej").emit('NewCommentCreated', sendData)
 		res.status(200)
 		res.send()	
 	}, function (errorObject) {
