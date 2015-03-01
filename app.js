@@ -113,12 +113,13 @@ app.post('/api/comment/', function(req, res) {
 		postItRef.child(postId).child('comments').push(newComment)
 		var sendData = {
 			comment: newComment,
-			postId: postId
+			postId: postId,
+			username: username
 		}
 		postItRef.child(postId).once('value', function(snapshot) {
 			socket.broadcast.to(snapshot.val().url).emit('NewCommentCreated', sendData)
 			res.status(200)
-			res.send()
+			res.send()	
 		}, function (errorObject) {
 		  console.log('The read failed: ' + errorObject.code)	
 		})	
