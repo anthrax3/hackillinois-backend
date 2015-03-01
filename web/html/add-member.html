@@ -19,7 +19,7 @@
     $("#group").submit(function(e) {
       e.preventDefault()
       console.log(authData)
-      $.post("/api/add-member", { groupId: $("#group .name").val(), userId: $("#group .id").val() }, function(data) {
+      $.post("/api/group/add-member", { groupId: $("#group .name").val(), userId: $("#group .id").val() }, function(data) {
       });
     })
   </script>
