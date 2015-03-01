@@ -118,16 +118,17 @@ app.post('/api/post-it/', function(req, res) {
 	console.log('POST req to create post-it')
 	var dom = req.body.dom
 	var url = req.body.url
+	var groupId = req.body.groupId
 	var newPostIt = {
 		domElement: dom,
 		url: url
 	}
-	var newPostItRef = postItRef.push(newPostIt)
+	var newPostItRef = groupRef.child(groupId).child('posts').push(newPostIt)
 	var sendData = {
 		post: newPostIt,
 		id: newPostItRef.key()
 	}
-	io.sockets.in(url).emit('NewPostItCreated', sendData)
+	io.sockets.in(url+groupId).emit('NewPostItCreated', sendData)
 	res.status(200)
 	res.send(sendData)
 })
@@ -148,19 +149,20 @@ app.post('/api/comment/', function(req, res) {
 	var username = req.body.username
 	var comment = req.body.comment
 	var postId = req.body.postId
+	var groupid = req.body.groupId
 	var date = new Date()
 	var newComment = {
 		username: username,
 		comment: comment,
 		date: date.getTime()
 	}
-	postItRef.child(postId).child('comments').push(newComment)
+	groupRef.child(groupId).child('posts').child(postId).child('comments').push(newComment)
 	var sendData = {
 		comment: newComment,
 		postId: postId
 	}
-	postItRef.child(postId).once('value', function(snapshot) {
-		io.sockets.in(snapshot.val().url).emit('NewCommentCreated', sendData)
+	groupRef.child(groupId).child('posts').child(postId).once('value', function(snapshot) {
+		io.sockets.in(snapshot.val().url+groupId).emit('NewCommentCreated', sendData)
 		res.status(200)
 		res.send()	
 	}, function (errorObject) {
