@@ -1,65 +1,11 @@
-<html>
+<form class="form-signin">
+  <h2 class="form-signin-heading">Please sign in</h2>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="email" ng-model="loginCtrl.email" class="form-control" placeholder="Email address" required="" autofocus="">
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" ng-model="loginCtrl.password" class="form-control" placeholder="Password" required="">
+  <button class="btn btn-lg btn-primary btn-block" ng-click="loginCtrl.login()">Sign in</button>
+</form>
 
-<head>
-  <script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-</head>
-<body>
-  <h1>Login to post it</h1>
-  <form id="login">
-  <input type="text" class="username" placeholder="Username"></input>
-  <input type="password" class="password" placeholder="Password"></input>
-  <button>Login</button>
-  </form>
-
-  <h1>Register</h1>
-  <form id="register">
-  <input type="text" class="username" placeholder="Username"></input>
-  <input type="password" class="password" placeholder="Password"></input>
-  <button>Register</button>
-  </form>
-
-  <div id="firebaseUid" style="display:none;"></div>
-  <div id="firebaseAuthToken" style="display: none;"></div>
-  
-  <script>
-    var ref = new Firebase("https://amber-heat-5574.firebaseio.com");
-
-    $("#login").submit(function(e) {
-      ref.authWithPassword({
-        email    : $("#login .username").val(),
-        password : $("#login .password").val()
-      }, function(error, authData) {
-        if (error) {
-          console.log("Login Failed!", error);
-        } else {
-          console.log("Authenticated successfully with payload:", authData);
-        }
-      });
-    })
-
-    $("#register").submit(function(e) {
-     ref.createUser({
-        email    : $("#register .username").val(),
-        password : $("#register .password").val()
-      }, function(error, userData) {
-        if (error) {
-          console.log("Error creating user:", error);
-        } else {
-          console.log("Successfully created user account with uid:", userData.uid);
-        }
-      });
-    })
-
-    ref.onAuth(function(authData) {
-      if(authData) {
-        $('#firebaseUid').text(authData.uid);
-        $('#firebaseAuthToken').text(authData.token);
-        console.log("User ID: " + authData.uid);
-        createAccount(authData);
-      }
-    });
-  </script>
-</body>
-
-</html>
+<div id="firebaseUid" style="display:none;"></div>
+<div id="firebaseAuthToken" style="display: none;"></div>

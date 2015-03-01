@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hack Illinois App</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="css/app.css">
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+
+  <script src="bower_components/firebase/firebase.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers/LoginCtrl.js"></script>
+  <script src="js/controllers/RegisterCtrl.js"></script>
+  <script src="js/controllers/GroupCtrl.js"></script>
+
+  <script src="js/services/someService.js"></script>
+  <script src="js/services/restService.js"></script>
+</head>
+<body ng-app="hackIllinois">
+  <div class="main-body">
+   	<nav>
+      <ul class="nav nav-justified">
+        <li class="active"><a href="#/">Login</a></li>
+        <li><a href="#/register">Register</a></li>
+        <li><a href="#/group">Group</a></li>
+      </ul>
+    </nav>
+
+  	<div ng-view></div>
+  </div>
+</body>
+</html>
