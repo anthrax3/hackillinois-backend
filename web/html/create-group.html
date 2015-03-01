@@ -21,8 +21,10 @@
       $.post("/api/group", { name: $("#group .name").val(), firstMember: authData.uid }, function(data) {
         var members = {};
         members[data] = data;
-        var newGroup = {};
-        newGroup['members'] = members;
+        var newGroup = {
+          members: 'poo',
+          tjo: members
+        };
         ref.child ('users').child(authData.uid).child('groups').push(newGroup);
       });
     })
