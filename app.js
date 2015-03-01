@@ -87,10 +87,10 @@ app.post('/api/post-it/', function(req, res) {
 		domElement: dom,
 		url: url
 	}
-	var newPostItId = postItRef.push(newPostIt)
+	var newPostItRef = postItRef.push(newPostIt)
 	var sendData = {
 		newPostIt: newPostIt,
-		postId: newPostItId.key()
+		postId: newPostItRef.key()
 	}
 	socket.broadcast.to(url).emit('NewPostItCreated', sendData)
 	res.status(200)
@@ -115,11 +115,11 @@ app.post('api/comment/', function(req, res) {
 			postId: postId
 		}
 		postItRef.child(postId).once('value', function(snapshot) {
-			io.broadcast.to(snapshot.val().url).emit('NewCommentCreated', sendData)
+			socket.broadcast.to(snapshot.val().url).emit('NewCommentCreated', sendData)
 			res.status(200)
 			res.send()
 		}, function (errorObject) {
 		  console.log('The read failed: ' + errorObject.code)	
 		})	
-})
+	})
 })
