@@ -28,7 +28,7 @@
 	      console.log("User ID: " + authData.uid);
 	    }
 	  });
-  }
+  };
 
   hackIllinois.controller('LoginCtrl', LoginCtrl);
 }());

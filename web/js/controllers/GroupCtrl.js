@@ -4,6 +4,24 @@
   'use strict';
   var GroupCtrl = function() {
   	this.ref = new Firebase("https://amber-heat-5574.firebaseio.com");
+
+    this.groups = [
+      {
+        name: 'jesus group',
+        members: [
+          'donatello', 
+          'jasmine', 
+          'marie'
+        ]
+      },
+      {
+        name: 'balls',
+        members: [
+          'fasetto', 
+          'joe'
+        ]
+      }
+    ]
   };
 
   GroupCtrl.prototype.createGroup = function() { 

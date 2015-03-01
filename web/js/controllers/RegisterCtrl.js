@@ -18,7 +18,7 @@
 			console.log("Successfully created user account with uid:", userData.uid);
 			var uref = this.ref.child('users/' + userData.uid);
 			uref.set({
-				name: 'putte',
+				name: this.username,
 				email: this.email
 			})
 		}

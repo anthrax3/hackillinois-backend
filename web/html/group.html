@@ -1,3 +1,10 @@
+<h2 class="form-signin-heading">Your groups:</h2>
+<div ng-repeat="group in groupCtrl.groups">
+	<h1>{{group.name}}</h1>
+	<div ng-repeat="member in group.members"><p>{{	member}}</p></div>
+	<button class="btn btn-lg btn-danger btn-block">quit</button>
+</div>
+
 <form class="form-signin">
   <h2 class="form-signin-heading">Create a new group!</h2>
   <label for="inputPassword" class="sr-only">Password</label>

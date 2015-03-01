@@ -36,9 +36,10 @@ app.get('/tjena', function(req, res){
 // GET ALL POST-IT ON URL	
 app.get('/api/post-it/', function(req, res) {
 	console.log('GET req to get all post-it with url')
+	var groupId = req.query.groupId
 	var postItList = []
 	var i = 0
-	postItRef.once('value', function(snapshot) {
+	groupRef.child(groupId).child('posts').once('value', function(snapshot) {
 		var listLenght = snapshot.numChildren()
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
