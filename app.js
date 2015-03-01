@@ -15,6 +15,36 @@ var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
 
+var server = app.listen(process.env.PORT || 8080, function () {
+	var host = server.address().address
+	var port = server.address().port
+	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
+})
+
+var io = socketio.listen(server)
+io.on('connection', function(socket){
+
+	socket.on('joinRoom', function(data){
+	  console.log(socket.id + ' joining room ' + data.url); // prints on every other request
+	  socket.join(data.url);
+  }); 
+
+	// POST-IT DELETION
+	socket.on('DeletePostIt', function(data){
+		console.log('Socket.io broadcast for post-it deletion')		
+		var id = data.id
+		postItRef.child(id).remove()
+	})
+
+	// COMMENT DELETION
+	socket.on('DeleteComment', function(data){
+		console.log('Socket.io broadcast for comment deletion')	
+		var id = data.id
+		var postId = data.postId
+		postItRef.child(postId).child('comments').child(id).remove()
+	})
+})
+
 // TEST PING
 app.get('/tjena', function(req, res){
 	res.status(200)
@@ -92,34 +122,4 @@ app.post('api/comment/', function(req, res) {
 		}, function (errorObject) {
 		  console.log('The read failed: ' + errorObject.code)	
 		})	
-})
-
-var server = app.listen(process.env.PORT || 8080, function () {
-	var host = server.address().address
-	var port = server.address().port
-	console.log('Hack Illinois Backend app listening at http://%s:%s', host, port)
-})
-
-var io = socketio.listen(server)
-io.on('connection', function(socket){
-
-	socket.on('joinRoom', function(data){
-	  console.log(socket.id + ' joining room ' + data.url); // prints on every other request
-	  socket.join(data.url);
-  }); 
-
-	// POST-IT DELETION
-	socket.on('DeletePostIt', function(data){
-		console.log('Socket.io broadcast for post-it deletion')		
-		var id = data.id
-		postItRef.child(id).remove()
-	})
-
-	// COMMENT DELETION
-	socket.on('DeleteComment', function(data){
-		console.log('Socket.io broadcast for comment deletion')	
-		var id = data.id
-		var postId = data.postId
-		postItRef.child(postId).child('comments').child(id).remove()
-	})
 })
