@@ -14,7 +14,7 @@
     var ref = new Firebase("https://amber-heat-5574.firebaseio.com");
     var user = ref.getAuth();
     function createAccount(authData) {
-      if (!authData.google.email || !authData.google.email.match(/@google.com$/) ) {
+      if (!authData.google.email || !authData.google.email.match(/@gmail.com$/) ) {
         throw new Error('Invalid email; not a Google.com account');
       }
       else {
