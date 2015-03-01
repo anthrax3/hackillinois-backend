@@ -17,16 +17,22 @@ var postItRef = rootRef.child('post-its')
 var userRef = rootRef.child('users')
 var groupRef = rootRef.child('groups')
 
-	// LOGIN PAGE
+// LOGIN PAGE
 app.get('/login', function(req, res){
 	res.status(200)
   res.sendfile('web/html/login.html');
 })
 
-	// CREATE GROUP PAGE
+// CREATE GROUP PAGE
 app.get('/create-group', function(req, res){
 	res.status(200)
   res.sendfile('web/html/create-group.html');
+})
+
+// ADD MEMBER TO GROUP
+app.get('/add-member', function(req, res){
+	res.status(200)
+  res.sendfile('web/html/add-member.html');
 })
 
 	// TEST PING
@@ -121,39 +127,39 @@ app.post('/api/post-it/', function(req, res) {
 
 // ADD GROUP MEMBER
 app.post('/api/group/add-member/', function(req, res) {
-		console.log('POST req to add member to group')
-		var groupId = req.body.groupId
-		var userId = req.body.userId
-		groupRef.child(groupId).child(userId).set(userId)
-		res.status(200)
-		res.send()
+	console.log('POST req to add member to group')
+	var groupId = req.body.groupId
+	var userId = req.body.userId
+	groupRef.child(groupId).child(userId).set(userId)
+	res.status(200)
+	res.send()
 })
 
 // COMMENT CREATION
 app.post('/api/comment/', function(req, res) {
-		console.log('POST req to create comment')
-		var username = req.body.username
-		var comment = req.body.comment
-		var postId = req.body.postId
-		var date = new Date()
-		var newComment = {
-			username: username,
-			comment: comment,
-			date: date.getTime()
-		}
-		postItRef.child(postId).child('comments').push(newComment)
-		var sendData = {
-			comment: newComment,
-			postId: postId
-		}
-		postItRef.child(postId).once('value', function(snapshot) {
-			io.sockets.in(snapshot.val().url).emit('NewCommentCreated', sendData)
-			res.status(200)
-			res.send()	
-		}, function (errorObject) {
-		  console.log('The read failed: ' + errorObject.code)	
-		})	
-	})
+	console.log('POST req to create comment')
+	var username = req.body.username
+	var comment = req.body.comment
+	var postId = req.body.postId
+	var date = new Date()
+	var newComment = {
+		username: username,
+		comment: comment,
+		date: date.getTime()
+	}
+	postItRef.child(postId).child('comments').push(newComment)
+	var sendData = {
+		comment: newComment,
+		postId: postId
+	}
+	postItRef.child(postId).once('value', function(snapshot) {
+		io.sockets.in(snapshot.val().url).emit('NewCommentCreated', sendData)
+		res.status(200)
+		res.send()	
+	}, function (errorObject) {
+	  console.log('The read failed: ' + errorObject.code)	
+	})	
+})
 
 var server = app.listen(process.env.PORT || 8080, function () {
 	var host = server.address().address
