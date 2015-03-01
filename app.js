@@ -70,7 +70,11 @@ app.get('/api/post-it/', function(req, res) {
 app.get('/api/users/:userId', function(req, res) {
 	var userId = req.params.userId
 	userRef.child(userId).once('value', function(snapshot) {
-		res.status(200)
+		if (snapshot.val() == null) {
+			res.status(400)
+		} else {
+			res.status(200)
+		}
 		res.send(snapshot.val())
 	}, function (errorObject) {
 	  console.log('The read failed: ' + errorObject.code)	
