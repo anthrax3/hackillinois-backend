@@ -10,7 +10,8 @@
     var authData = this.ref.getAuth();
       if (authData != null) {
 	      $.post("/api/group", { name: $("#group .name").val(), firstMember: authData.uid }, function(data) {
-	    	})
+	    	      console.log("Successfully created group with id:", authData.uid);
+        })
       }
   };
 

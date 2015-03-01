@@ -7,7 +7,7 @@
   	this.init();
   };
 
-	LoginCtrl.prototype.someFunction = function() {
+	LoginCtrl.prototype.login = function() {
     this.ref.authWithPassword({
       email    : $("#login .username").val(),
       password : $("#login .password").val()
