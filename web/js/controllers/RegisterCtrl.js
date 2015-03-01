@@ -5,7 +5,6 @@
   'use strict';
   var RegisterCtrl = function() {
  		this.ref = new Firebase("https://amber-heat-5574.firebaseio.com");
- 		this.init();
   };
 
   RegisterCtrl.prototype.register = function() {
@@ -25,16 +24,5 @@
       }
     });
   };
-
-  RegisterCtrl.prototype.init = function() {
-  	this.ref.onAuth(function(authData) {
-	    if(authData) {
-	      $('#firebaseUid').text(authData.uid);
-	      $('#firebaseAuthToken').text(authData.token);
-	      console.log("User ID: " + authData.uid);
-	    }
-	  });
-  }
-
   hackIllinois.controller('RegisterCtrl', RegisterCtrl);
 }());
