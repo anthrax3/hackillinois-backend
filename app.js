@@ -151,7 +151,7 @@ app.post('/api/comment/', function(req, res) {
 	var username = req.body.username
 	var comment = req.body.comment
 	var postId = req.body.postId
-	var groupid = req.body.groupId
+	var groupId = req.body.groupId
 	var date = new Date()
 	var newComment = {
 		username: username,
