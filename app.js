@@ -79,6 +79,22 @@ app.get('/api/users/:userId', function(req, res) {
 	})	
 })
 
+// GET GROUP FROM GROUP ID
+app.get('/api/groups/:groupId', function(req, res) {
+	var groupId = req.params.groupId
+	groupRef.child(groupId).once('value', function(snapshot) {
+		if (snapshot.val() == null) {
+			res.status(400)
+		} else {
+			res.status(200)
+		}
+		res.send(snapshot.val())
+	}, function (errorObject) {
+	  console.log('The read failed: ' + errorObject.code)	
+	})	
+})
+
+
 // GROUP CREATION
 app.post('/api/group/', function(req, res) {
 	console.log('POST req to create group')
