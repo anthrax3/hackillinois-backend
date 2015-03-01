@@ -164,7 +164,7 @@ app.post('/api/comment/', function(req, res) {
 		postId: postId
 	}
 	groupRef.child(groupId).child('posts').child(postId).once('value', function(snapshot) {
-		io.sockets.in("hej").emit('NewCommentCreated', sendData)
+		io.sockets.in(snapshot.val().url+groupId).emit('NewCommentCreated', sendData)
 		res.status(200)
 		res.send()	
 	}, function (errorObject) {
@@ -182,7 +182,7 @@ var io = socketio.listen(server)
 io.on('connection', function(socket){
 
 	socket.on('joinRoom', function(data){
-	  console.log(socket.id + ' joining room ' + data.url+data.groupId); // prints on every other request
+	  console.log(socket.id + ' joining room ' + data.url); // prints on every other request
 	  socket.join(data.url);
   }); 
 
