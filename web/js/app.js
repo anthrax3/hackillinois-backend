@@ -13,7 +13,7 @@ hackIllinois.config(['$routeProvider',
         controller: 'RegisterCtrl'
       }).
       when('/group', {
-        templateUrl: 'html/group.html',
+        templateUrl: 'html/create-group.html',
         controller: 'GroupCtrl'
       }).
       otherwise({
