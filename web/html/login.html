@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Logging In...</h1>
+  <div id="firebaseUid" style="display:none;"></div>
+  <div id="firebaseAuthToken" style="display: none;"></div>
+
+  <script>
+    debugger;
+    var ref = new Firebase("https://trends.firebaseio.com");
+    var user = ref.getAuth();
+    function createAccount(authData) {
+      if (!authData.google.email || !authData.google.email.match(/@google.com$/) ) {
+        throw new Error('Invalid email; not a Google.com account');
+      }
+      else {
+        var uref = ref.child('users/' + authData.uid);
+        uref.set({
+          name: authData.google.displayName,
+          email: authData.google.email,
+          avatar: authData.google.cachedUserProfile.picture
+        }, function(err) {
+          if( err ) { console.error(err); }
+          else {
+            console.log('user created', authData.uid);
+          }
+        });
+      }
+    }
+    if(!user) {
+      debugger;
+      ref.authWithOAuthPopup("google", function(error) {
+        debugger;
+        if(error) {
+          // an error occurred while attempting login
+          console.log(error);
+        }
+      }, {  scope: "email" });
+    }
+    ref.onAuth(function(authData) {
+      if(authData) {
+        $('#firebaseUid').text(authData.uid);
+        $('#firebaseAuthToken').text(authData.token);
+        console.log("User ID: " + authData.uid);
+        createAccount(authData);
+      }
+    });
+  </script>
+</body>
+
+</html>

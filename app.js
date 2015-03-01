@@ -15,6 +15,12 @@ var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
 
+	// LOGIN PAGE
+app.get('/login', function(req, res){
+	res.status(200)
+  res.send('/web/html/login.html');
+})
+
 	// TEST PING
 app.get('/tjena', function(req, res){
 	res.status(200)
