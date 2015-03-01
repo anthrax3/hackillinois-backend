@@ -59,7 +59,8 @@ app.get('/api/post-it/', function(req, res) {
 		var listLenght = snapshot.numChildren()
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
-			  var postIt = childSnapshot.val();
+			  var postIt = childSnapshot.val()
+			  postIt.id = childSnapshot.key()
 			  if (postIt.url == req.query.url) {
 			  	postItList.push(postIt)
 			  }
