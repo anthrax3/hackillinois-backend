@@ -1,26 +1,5 @@
-<html>
- 
-<head>
-  <script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-</head>
-<body>
-  <h1>Create groups</h1>
-  <form id="group">
-  <input type="text" class="name" placeholder="Groupname"></input>
-  <button>Create</button>
-  </form>
- 
-  <script>
-    var ref = new Firebase("https://amber-heat-5574.firebaseio.com");
-    var authData = ref.getAuth();
- 
-    $("#group").submit(function(e) {
-      e.preventDefault()
-      console.log(authData)
-      $.post("/api/group", { name: $("#group .name").val(), firstMember: authData.uid }, function(data) {
-      });
-    })
-  </script>
-</body>
-</html>
+<h1>Create groups</h1>
+<form id="group">
+<input type="text" class="name" placeholder="Groupname"></input>
+<button ng-click="groupCtrl.createGroup()">Create</button>
+</form>
