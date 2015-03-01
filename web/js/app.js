@@ -4,7 +4,7 @@ var hackIllinois = angular.module('hackIllinois', ['ngRoute']);
 hackIllinois.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/login', {
+      when('/', {
         templateUrl: 'html/login.html',
         controller: 'LoginCtrl as loginCtrl'
       }).
@@ -17,6 +17,6 @@ hackIllinois.config(['$routeProvider',
         controller: 'GroupCtrl as groupCtrl'
       }).
       otherwise({
-        redirectTo: '/login'
+        redirectTo: '/'
       });
   }]);

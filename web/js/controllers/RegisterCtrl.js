@@ -17,7 +17,7 @@
         console.log("Error creating user:", error);
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
-        var uref = ref.child('users/' + userData.uid);
+        var uref = this.ref.child('users/' + userData.uid);
         uref.set({
           name: 'putte',
           email: this.email
