@@ -14,11 +14,19 @@ var WORKERS = process.env.WEB_CONCURRENCY || 1;
 var firebase = require('firebase')
 var rootRef = new firebase('https://amber-heat-5574.firebaseio.com/')
 var postItRef = rootRef.child('post-its')
+var userRef = rootRef.child('users')
+var groupRef = rootRef.child('groups')
 
 	// LOGIN PAGE
 app.get('/login', function(req, res){
 	res.status(200)
   res.sendfile('web/html/login.html');
+})
+
+	// CREATE GROUP PAGE
+app.get('/create-group', function(req, res){
+	res.status(200)
+  res.sendfile('web/html/create-group.html');
 })
 
 	// TEST PING
@@ -56,6 +64,20 @@ app.get('/api/post-it/', function(req, res) {
 	}, function (errorObject) {
 	  console.log('The read failed: ' + errorObject.code)	
 	})	
+})
+
+// GROUP CREATION
+app.post('/api/group/', function(req, res) {
+	console.log('POST req to create group')
+	var name = req.body.name
+	var firstMember = req.body.firstMember
+	var newGroup = {
+		name: name
+	}
+	newGroup[firstMember] = firstMember
+	var newGroupRef = groupRef.push(newGroup)
+	res.status(200)
+	res.send(newGroupRef.key())
 })
 
 // POST-IT CREATION
