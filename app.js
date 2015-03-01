@@ -22,7 +22,7 @@ var userRef = rootRef.child('users')
 var groupRef = rootRef.child('groups')
 
 // STATIC CONTENT
-app.all("/*", function(req, res, next) {
+app.all("/", function(req, res, next) {
 	res.sendfile("index.html", { root: __dirname + "/web" });
 });
 
