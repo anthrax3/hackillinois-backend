@@ -66,6 +66,17 @@ app.get('/api/post-it/', function(req, res) {
 	})	
 })
 
+// GET USER FROM USERID
+app.get('/api/users/:userId', function(req, res) {
+	var userId = req.params.userId
+	userRef.child(userId).once('value', function(snapshot) {
+		res.status(200)
+		res.send(snapshot.val())
+	}, function (errorObject) {
+	  console.log('The read failed: ' + errorObject.code)	
+	})	
+})
+
 // GROUP CREATION
 app.post('/api/group/', function(req, res) {
 	console.log('POST req to create group')
@@ -102,6 +113,16 @@ app.post('/api/post-it/', function(req, res) {
 	io.sockets.in(url).emit('NewPostItCreated', sendData)
 	res.status(200)
 	res.send()
+})
+
+// ADD GROUP MEMBER
+app.post('/api/group/add-member/', function(req, res) {
+		console.log('POST req to add member to group')
+		var groupId = req.body.groupId
+		var userId = req.body.userId
+		groupRef.child(groupId).child(userId).set(userId)
+		res.status(200)
+		res.send()
 })
 
 // COMMENT CREATION
