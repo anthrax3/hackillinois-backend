@@ -2,8 +2,8 @@
 
 (function() {
   'use strict';
-  var GroupCtrl = function() {
-  	this.ref = new Firebase("https://amber-heat-5574.firebaseio.com");
+  var GroupCtrl = function(restService) {
+    this.restService = restService;
 
     this.groups = [
       {
@@ -25,12 +25,7 @@
   };
 
   GroupCtrl.prototype.createGroup = function() { 
-    var authData = this.ref.getAuth();
-      if (authData != null) {
-	      $.post("/api/group", { name: this.groupName, firstMember: authData.uid }, function(data) {
-	    	      console.log("Successfully created group with id:", authData.uid);
-        })
-      }
+    this.restService.createGroup(this.groupName);
   };
 
   hackIllinois.controller('GroupCtrl', GroupCtrl);

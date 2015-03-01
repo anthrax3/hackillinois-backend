@@ -3,3 +3,11 @@
 	margin: 0 auto;
 	margin-top: 100px;
 }
+
+.group-div {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #FF00FF;
+	margin-bottom: 30px;
+}

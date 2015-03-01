@@ -1,5 +1,5 @@
 <h2 class="form-signin-heading">Your groups:</h2>
-<div ng-repeat="group in groupCtrl.groups">
+<div ng-repeat="group in groupCtrl.groups" class="group-div">
 	<h1>{{group.name}}</h1>
 	<div ng-repeat="member in group.members"><p>{{	member}}</p></div>
 	<button class="btn btn-lg btn-danger btn-block">quit</button>
