@@ -116,7 +116,7 @@ app.post('/api/comment/', function(req, res) {
 			postId: postId
 		}
 		postItRef.child(postId).once('value', function(snapshot) {
-			socket.broadcast.to(snapshot.val().url).emit('NewCommentCreated', sendData)
+			io.sockets.in(snapshot.val().url).emit('NewCommentCreated', sendData)
 			res.status(200)
 			res.send()	
 		}, function (errorObject) {
