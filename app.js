@@ -80,7 +80,7 @@ app.get('/api/users/:userId', function(req, res) {
 })
 
 // GET GROUP FROM GROUP ID
-app.get('/api/groups/:groupId', function(req, res) {
+app.get('/api/group/:groupId', function(req, res) {
 	var groupId = req.params.groupId
 	groupRef.child(groupId).once('value', function(snapshot) {
 		if (snapshot.val() == null) {
@@ -93,7 +93,6 @@ app.get('/api/groups/:groupId', function(req, res) {
 	  console.log('The read failed: ' + errorObject.code)	
 	})	
 })
-
 
 // GROUP CREATION
 app.post('/api/group/', function(req, res) {
