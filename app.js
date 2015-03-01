@@ -30,8 +30,10 @@ app.get('/api/post-it/', function(req, res) {
 		var listLenght = snapshot.numChildren()
 		if (listLenght != 0) {
 			snapshot.forEach(function(childSnapshot) {
-			  var postIt = childSnapshot.val()
-			  postIt.id = childSnapshot.key()
+			  var postIt = {
+			  	post: childSnapshot.val(),
+			  	id: childSnapshot.key()
+			  }
 			  if (postIt.url == req.query.url) {
 			  	postItList.push(postIt)
 			  }
@@ -61,8 +63,8 @@ app.post('/api/post-it/', function(req, res) {
 	}
 	var newPostItRef = postItRef.push(newPostIt)
 	var sendData = {
-		newPostIt: newPostIt,
-		postId: newPostItRef.key()
+		post: newPostIt,
+		id: newPostItRef.key()
 	}
 	io.sockets.in(url).emit('NewPostItCreated', sendData)
 	res.status(200)
