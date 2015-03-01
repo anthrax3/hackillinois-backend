@@ -34,7 +34,7 @@ app.get('/api/post-it/', function(req, res) {
 			  	post: childSnapshot.val(),
 			  	id: childSnapshot.key()
 			  }
-			  if (postIt.url == req.query.url) {
+			  if (postIt.post.url == req.query.url) {
 			  	postItList.push(postIt)
 			  }
 			  if (i == listLenght - 1) {
