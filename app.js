@@ -183,7 +183,7 @@ io.on('connection', function(socket){
 
 	socket.on('joinRoom', function(data){
 	  console.log(socket.id + ' joining room ' + data.url); // prints on every other request
-	  socket.join(data.url);
+	  socket.join(data.url+data.groupId);
   }); 
 
 	// POST-IT DELETION
