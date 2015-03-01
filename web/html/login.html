@@ -14,7 +14,7 @@
  
   <h1>Register</h1>
   <form id="register">
-  <input type="text" class="username" placeholder="Username"></input>
+  <input type="text" class="username" placeholder="Email"></input>
   <input type="password" class="password" placeholder="Password"></input>
   <button>Register</button>
   </form>
@@ -49,11 +49,10 @@
           console.log("Error creating user:", error);
         } else {
           console.log("Successfully created user account with uid:", userData.uid);
-          var uref = ref.child('users/' + userData.uid);
+          var uref = ref.child('users/' + stripEmail($("#register .username").val()));
           uref.set({
             name: 'putte',
-            email: $("#register .username").val(),
-            id: userData.uid
+            email: $("#register .username").val()
           })
         }
       });
@@ -67,6 +66,10 @@
         // createAccount(authData);
       }
     });
+
+    var stripEmail = function(email) {
+      return email.replace('.', '-').replace('@', '-')
+    }
   </script>
 </body>
  
