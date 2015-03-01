@@ -182,7 +182,7 @@ var io = socketio.listen(server)
 io.on('connection', function(socket){
 
 	socket.on('joinRoom', function(data){
-	  console.log(socket.id + ' joining room ' + data.url); // prints on every other request
+	  console.log(socket.id + ' joining room ' + data.url+data.groupId); // prints on every other request
 	  socket.join(data.url);
   }); 
 
