@@ -71,13 +71,18 @@ app.post('/api/group/', function(req, res) {
 	console.log('POST req to create group')
 	var name = req.body.name
 	var firstMember = req.body.firstMember
+
+  var members = {};
+  members[firstMember] = firstMember;
 	var newGroup = {
 		name: name
-	}
-	newGroup[firstMember] = firstMember
+	}  
+	newGroup['members'] = members;
 	var newGroupRef = groupRef.push(newGroup)
+	var key = newGroupRef.key()
+	userRef.child(firstMember).child('groups').child(key).update(key)
 	res.status(200)
-	res.send(newGroupRef.key())
+	res.send(key)
 })
 
 // POST-IT CREATION
