@@ -3,11 +3,11 @@
 
 (function() {
 	'use strict';
-	var RegisterCtrl = function() {
-		this.ref = new Firebase("https://amber-heat-5574.firebaseio.com");
+	var RegisterCtrl = function(restService) {
+		this.restService = restService;
 	};
 
-	RegisterCtrl.prototype.register = function() {
+	RegisterCtrl.prototype.registerNewUser = function() {
 		this.ref.createUser({
 			email    : this.email,
 			password : this.password

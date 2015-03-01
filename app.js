@@ -127,7 +127,8 @@ app.post('/api/post-it/', function(req, res) {
 	var newPostItRef = groupRef.child(groupId).child('posts').push(newPostIt)
 	var sendData = {
 		post: newPostIt,
-		id: newPostItRef.key()
+		id: newPostItRef.key(),
+		groupId: groupId
 	}
 	io.sockets.in(url+groupId).emit('NewPostItCreated', sendData)
 	res.status(200)
