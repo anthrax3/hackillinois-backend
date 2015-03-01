@@ -18,6 +18,7 @@
         throw new Error('Invalid email; not a Google.com account');
       }
       else {
+        console.log("BAAAJS")
         var uref = ref.child('users/' + authData.uid);
         uref.set({
           name: authData.google.displayName,
