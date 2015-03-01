@@ -43,9 +43,8 @@ io.on('connection', function(socket){
 		var postId = data.postId
 		postItRef.child(postId).child('comments').child(id).remove()
 	})
-})
 
-// TEST PING
+	// TEST PING
 app.get('/tjena', function(req, res){
 	res.status(200)
   res.send('hello world');
@@ -93,7 +92,7 @@ app.post('/api/post-it/', function(req, res) {
 		newPostIt: newPostIt,
 		postId: newPostItId.key()
 	}
-	io.broadcast.to(url).emit('NewPostItCreated', sendData)
+	socket.broadcast.to(url).emit('NewPostItCreated', sendData)
 	res.status(200)
 	res.send()
 })
@@ -122,4 +121,5 @@ app.post('api/comment/', function(req, res) {
 		}, function (errorObject) {
 		  console.log('The read failed: ' + errorObject.code)	
 		})	
+})
 })
