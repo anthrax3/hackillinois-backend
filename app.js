@@ -99,7 +99,7 @@ app.post('/api/post-it/', function(req, res) {
 })
 
 // COMMENT CREATION
-app.post('api/comment/', function(req, res) {
+app.post('/api/comment/', function(req, res) {
 		console.log('POST req to create comment')
 		var username = req.body.username
 		var comment = req.body.comment
