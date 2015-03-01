@@ -5,6 +5,10 @@ var multer = require('multer');
 
 var app = express()
 
+app.use("/js", express.static(__dirname + "/web/js"));
+app.use("/css", express.static(__dirname + "/web/css"));
+app.use("/html", express.static(__dirname + "/web/html"));
+
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
@@ -17,23 +21,10 @@ var postItRef = rootRef.child('post-its')
 var userRef = rootRef.child('users')
 var groupRef = rootRef.child('groups')
 
-// LOGIN PAGE
-app.get('/login', function(req, res){
-	res.status(200)
-  res.sendfile('web/html/login.html');
-})
-
-// CREATE GROUP PAGE
-app.get('/create-group', function(req, res){
-	res.status(200)
-  res.sendfile('web/html/create-group.html');
-})
-
-// ADD MEMBER TO GROUP
-app.get('/add-member', function(req, res){
-	res.status(200)
-  res.sendfile('web/html/add-member.html');
-})
+// STATIC CONTENT
+app.all("/*", function(req, res, next) {
+	res.sendfile("index.html", { root: __dirname + "/web" });
+});
 
 	// TEST PING
 app.get('/tjena', function(req, res){
@@ -122,7 +113,7 @@ app.post('/api/post-it/', function(req, res) {
 	}
 	io.sockets.in(url).emit('NewPostItCreated', sendData)
 	res.status(200)
-	res.send()
+	res.send(sendData)
 })
 
 // ADD GROUP MEMBER
