@@ -9,14 +9,14 @@
 
 	LoginCtrl.prototype.login = function() {
     this.ref.authWithPassword({
-      email    : $("#login .username").val(),
-      password : $("#login .password").val()
+      email    : this.email,
+      password : this.password
     }, function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else {
-        console.log("Authenticated successfully with payload:", authData);
-      }
+    if (error) {
+      console.log("Login Failed!", error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+    }
     });
   };
 

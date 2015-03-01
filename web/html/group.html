@@ -1,1 +1,6 @@
-group
+<form class="form-signin">
+  <h2 class="form-signin-heading">Create a new group!</h2>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" ng-model="groupCtrl.groupName" class="form-control" placeholder="Password" required="">
+  <button class="btn btn-lg btn-primary btn-block" ng-click="groupCtrl.createGroup()">Create</button>
+</form>

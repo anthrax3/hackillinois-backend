@@ -10,8 +10,8 @@
 
   RegisterCtrl.prototype.register = function() {
    this.ref.createUser({
-      email    : $("#register .username").val(),
-      password : $("#register .password").val()
+      email    : this.email,
+      password : this.password
     }, function(error, userData) {
       if (error) {
         console.log("Error creating user:", error);
@@ -20,7 +20,7 @@
         var uref = ref.child('users/' + userData.uid);
         uref.set({
           name: 'putte',
-          email: $("#register .username").val()
+          email: this.email
         })
       }
     });
