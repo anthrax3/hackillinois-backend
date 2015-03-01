@@ -17,6 +17,7 @@
  
     $("#group").submit(function(e) {
       e.preventDefault()
+      console.log(authData)
       var userId = stripEmail(authData.email);
       $.post("/api/group", { name: $("#group .name").val(), firstMember: userId }, function(data) {
         var newGroup = {};
