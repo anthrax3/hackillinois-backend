@@ -18,7 +18,7 @@ var postItRef = rootRef.child('post-its')
 	// LOGIN PAGE
 app.get('/login', function(req, res){
 	res.status(200)
-  res.send('/web/html/login.html');
+  res.sendFile('web/html/login.html');
 })
 
 	// TEST PING
