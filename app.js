@@ -80,7 +80,7 @@ app.post('/api/group/', function(req, res) {
 	newGroup['members'] = members;
 	var newGroupRef = groupRef.push(newGroup)
 	var key = newGroupRef.key()
-	userRef.child(firstMember).child('groups').child(key).update(key)
+	userRef.child(firstMember).child('groups').child(key).set(key)
 	res.status(200)
 	res.send(key)
 })
