@@ -130,7 +130,7 @@ app.post('/api/group/add-member/', function(req, res) {
 	console.log('POST req to add member to group')
 	var groupId = req.body.groupId
 	var userId = req.body.userId
-	groupRef.child(groupId).child(userId).set(userId)
+	groupRef.child(groupId).child('members').child(userId).set(userId)
 	res.status(200)
 	res.send()
 })
