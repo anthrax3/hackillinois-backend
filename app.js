@@ -8,6 +8,7 @@ var app = express()
 app.use("/js", express.static(__dirname + "/web/js"));
 app.use("/css", express.static(__dirname + "/web/css"));
 app.use("/html", express.static(__dirname + "/web/html"));
+app.use("/bower_components", express.static(__dirname + "/web/bower_components"));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
