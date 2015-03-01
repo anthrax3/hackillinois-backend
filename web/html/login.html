@@ -26,6 +26,7 @@
     var ref = new Firebase("https://amber-heat-5574.firebaseio.com");
  
     $("#login").submit(function(e) {
+      e.preventDefault();
       ref.authWithPassword({
         email    : $("#login .username").val(),
         password : $("#login .password").val()
@@ -39,6 +40,7 @@
     })
  
     $("#register").submit(function(e) {
+      e.preventDefault();
      ref.createUser({
         email    : $("#register .username").val(),
         password : $("#register .password").val()
