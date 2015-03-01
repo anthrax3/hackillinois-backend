@@ -16,12 +16,18 @@
     var authData = ref.getAuth();
  
     $("#group").submit(function(e) {
-      $.post("/api/group", { name: $("#group .name").val(), firstMember: authData.uid }, function(data) {
+      e.preventDefault()
+      var userId = stripEmail(authData.email);
+      $.post("/api/group", { name: $("#group .name").val(), firstMember: userId }, function(data) {
         var newGroup = {};
         newGroup[data.id] = data.id;
-        ref.child ('users').child(authData.uid).child('groups').push(newGroup);
+        ref.child ('users').child(userId).child('groups').push(newGroup);
       });
     })
+
+    var stripEmail = function(email) {
+      return email.replace('.', '-').replace('@', '-')
+    }
   </script>
 </body>
  
