@@ -28,13 +28,41 @@
   restService.prototype.createGroup = function(groupName) {
     var authData = this.ref.getAuth();
     if (authData != null) {
-    $http.post('/api/group"', {name: groupName}).
-      success(function(data, status, headers, config) {
-        console.log("Couldn't create user");
-      }).
+    this.http.post('/api/group', {name: groupName, firstMember: authData.uid}).
       error(function(data, status, headers, config) {
-        console.log("Successfully created group with id:", authData.uid);
+        console.log("Couldn't create group");
+      }).
+      success(function(data, status, headers, config) {
+        console.log("Successfully created group with id:", groupName);
       });
+    }
+  };
+
+  restService.prototype.getUser = function(callback) {
+    var authData = this.ref.getAuth();
+    if (authData != null) {
+      this.http.get('/api/users/'+authData.uid, {}).
+        error(function(data, status, headers, config) {
+          console.log("Couldn't find a user");
+        }).
+        success(function(data, status, headers, config) {
+          return callback(data);
+        });
+    }
+  };
+
+  restService.prototype.getGroup = function(groupId, callback) {
+    if (groupId != null) {
+      this.http.get('/api/group/'+groupId, {}).
+        error(function(data, status, headers, config) {
+          console.log("Couldn't find a group");
+        }).
+        success(function(data, status, headers, config) {
+          return callback(data);
+        });
+    }
+    else {
+
     }
   };
 

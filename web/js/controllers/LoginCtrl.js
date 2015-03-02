@@ -2,9 +2,9 @@
 
 (function() {
   'use strict';
-  var LoginCtrl = function() {
+  var LoginCtrl = function($location) {
   	this.ref = new Firebase("https://amber-heat-5574.firebaseio.com");
-  	this.init();
+  	this.init($location);
   };
 
 	LoginCtrl.prototype.login = function() {
@@ -20,12 +20,13 @@
     });
   };
 
-  LoginCtrl.prototype.init = function() {
+  LoginCtrl.prototype.init = function($location) {
   	this.ref.onAuth(function(authData) {
 	    if(authData) {
 	      $('#firebaseUid').text(authData.uid);
 	      $('#firebaseAuthToken').text(authData.token);
 	      console.log("User ID: " + authData.uid);
+        //$location.url("/dashboard")
 	    }
 	  });
   };

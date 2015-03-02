@@ -1,5 +1,5 @@
 <h2 class="form-signin-heading">Dashboard</h2>
-<div ng-repeat="group in groupCtrl.groups" class="group-div">
+<div ng-repeat="group in dashCtrl.groups" class="group-div">
 	<h1>{{group.name}}</h1>
 	<div ng-repeat="member in group.members"><p>{{	member}}</p></div>
 	<button class="btn btn-lg btn-danger btn-block">quit</button>
@@ -7,6 +7,6 @@
 
 <form class="form-signin">
   <h2 class="form-signin-heading">Create a new group!</h2>
-  <input type="text" ng-model="groupCtrl.groupName" class="form-control" placeholder="Group name" required="">
-  <button class="btn btn-lg btn-primary btn-block" ng-click="groupCtrl.createGroup()">Create</button>
+  <input type="text" ng-model="dashCtrl.groupName" class="form-control" placeholder="Group name" required="">
+  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup()">Create</button>
 </form>

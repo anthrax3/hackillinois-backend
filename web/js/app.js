@@ -5,16 +5,16 @@ hackIllinois.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'html/login.html',
-        controller: 'LoginCtrl as loginCtrl'
+        templateUrl: 'html/dashboard.html',
+        controller: 'DashCtrl as dashCtrl'
       }).
       when('/register', {
         templateUrl: 'html/register.html',
         controller: 'RegisterCtrl as registerCtrl'
       }).
-      when('/group', {
-        templateUrl: 'html/group.html',
-        controller: 'GroupCtrl as groupCtrl'
+      when('/login', {
+        templateUrl: 'html/login.html',
+        controller: 'LoginCtrl as loginCtrl'
       }).
       otherwise({
         redirectTo: '/'
