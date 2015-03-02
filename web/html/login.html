@@ -1,11 +1,24 @@
-<form class="form-signin">
-  <h2 class="form-signin-heading">Please sign in</h2>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" ng-model="loginCtrl.email" class="form-control" placeholder="Email address" required="" autofocus="">
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" ng-model="loginCtrl.password" class="form-control" placeholder="Password" required="">
-  <button class="btn btn-lg btn-primary btn-block" ng-click="loginCtrl.login()">Sign in</button>
-</form>
-
+<div class="col-lg-6">
+	<form class="form-signin">
+	  <h2 class="form-signin-heading">Please sign in</h2>
+	  <label for="inputEmail" class="sr-only">Email address</label>
+	  <input type="email" ng-model="loginUser.email" class="form-control" placeholder="Email address" required="" autofocus="">
+	  <label for="inputPassword" class="sr-only">Password</label>
+	  <input type="password" ng-model="loginUser.password" class="form-control" placeholder="Password" required="">
+	  <button class="btn btn-lg btn-primary btn-block" ng-click="loginCtrl.login(loginUser)">Sign in</button>
+	</form>
+</div>
+<div class="col-lg-6">
+	<form class="form-signin">
+	  <h2 class="form-signin-heading">Please register</h2>
+	  <label for="inputEmail" class="sr-only">Email address</label>
+	  <input type="email" ng-model="registerUser.email" class="form-control" placeholder="Email address" required="" autofocus="">
+	  <label for="inputUsername" class="sr-only">Username</label>
+	  <input type="username" ng-model="registerUser.username" class="form-control" placeholder="Username" required="" autofocus="">
+	  <label for="inputPassword" class="sr-only">Password</label>
+	  <input type="password" ng-model="registerUser.password" class="form-control" placeholder="Password" required="">
+	  <button class="btn btn-lg btn-primary btn-block" ng-click="loginCtrl.registerNewUser(registerUser)">Register</button>
+	</form>
+</div>
 <div id="firebaseUid" style="display:none;"></div>
 <div id="firebaseAuthToken" style="display: none;"></div>

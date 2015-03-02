@@ -172,6 +172,16 @@ app.post('/api/comment/', function(req, res) {
 	})	
 })
 
+// DELETE GROUP
+app.post('/api/group/remove', function(req, res) {
+	var groupId = req.body.groupId
+	var userId = req.body.userId
+	groupRef.child(groupId).remove();
+	userRef.child(userId).child('groups').child(groupId).remove();
+	res.status(200)
+	res.send()
+})
+
 var server = app.listen(process.env.PORT || 8080, function () {
 	var host = server.address().address
 	var port = server.address().port

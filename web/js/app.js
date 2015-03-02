@@ -8,10 +8,6 @@ hackIllinois.config(['$routeProvider',
         templateUrl: 'html/dashboard.html',
         controller: 'DashCtrl as dashCtrl'
       }).
-      when('/register', {
-        templateUrl: 'html/register.html',
-        controller: 'RegisterCtrl as registerCtrl'
-      }).
       when('/login', {
         templateUrl: 'html/login.html',
         controller: 'LoginCtrl as loginCtrl'

@@ -2,11 +2,11 @@
 <div ng-repeat="group in dashCtrl.groups" class="group-div">
 	<h1>{{group.name}}</h1>
 	<div ng-repeat="member in group.members"><p>{{	member}}</p></div>
-	<button class="btn btn-lg btn-danger btn-block">quit</button>
+	<button ng-click="dashCtrl.removeGroup($index)" class="btn btn-lg btn-danger btn-block">Remove</button>
 </div>
 
 <form class="form-signin">
   <h2 class="form-signin-heading">Create a new group!</h2>
-  <input type="text" ng-model="dashCtrl.groupName" class="form-control" placeholder="Group name" required="">
-  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup()">Create</button>
+  <input type="text" ng-model="group.name" class="form-control" placeholder="Group name" required="">
+  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup(group.name)">Create</button>
 </form>
