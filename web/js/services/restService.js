@@ -112,7 +112,7 @@
       });
   };
 
-  restService.prototype.addUser = function(groupId, userId, userEmail, callback) {
+  restService.prototype.addUser = function(groupId, userId, callback) {
     this.checkUserExists(userId, function(exists) {
       if (exists) {
       this.http.post('/api/group/add-user/', {groupId: groupId, userId: userId}).
@@ -122,7 +122,7 @@
         success(function(data, status, headers, config) {
           console.log('Added user to group ' + groupId);
           callback(true);
-        }.bind(this));
+        });
       } else {
         callback(false);
       }

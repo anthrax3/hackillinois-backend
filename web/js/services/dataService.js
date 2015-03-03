@@ -38,14 +38,14 @@
     }
   };
 
-  dataService.prototype.addUser = function(index, memberId, callback) {
-    if (this.groups[index].members[memberId] != null) {
+  dataService.prototype.addUser = function(index, userId, callback) {
+    if (this.groups[index].members[userId] != null) {
       console.log('User already in group!');
       return;
     }
-    this.restService.addUser(this.groups[index].id, memberId, function(userExists) {
+    this.restService.addUser(this.groups[index].id, userId, function(userExists) {
       if (userExists) {
-        this.groups[index].members.push(memberId);
+        this.groups[index].members[userId] = userId;
         callback(true);
       } else {
         callback(false);
