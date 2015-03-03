@@ -1,18 +1,20 @@
+<h1>Groups</h1>
 <div class="panel panel-primary">	
+	<div class="panel-heading">
+		<h2>Group controls</h2>
+	</div>
 	<div class="panel-body">
   	<form class="navbar-form navbar-left">
   		<h3>Create new group</h3>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="User ID" ng-model="dashCtrl.tempGroup.name">
+        <input type="text" class="form-control" placeholder="Group name" ng-model="dashCtrl.tempGroup.name">
       </div>
     	<button ng-click="dashCtrl.createGroup(dashCtrl.tempGroup.name)" class="btn btn-primary glyphicon glyphicon-plus"></button>
 	  </form>
 	</div>
 </div>
-
-<h1>Groups</h1>
 <div ng-repeat="group in dashCtrl.groups">
-	<div class="panel panel-primary">	
+	<div class="panel panel-success">	
 		<div class="panel-heading">
 			<h2>{{group.name}}</h2>
 		</div>
