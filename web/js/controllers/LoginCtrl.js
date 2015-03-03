@@ -2,11 +2,11 @@
 
 (function() {
   'use strict';
-  var LoginCtrl = function(userService, $location) {
-  	this.userService = userService;
+  var LoginCtrl = function(authService, $location) {
+  	this.authService = authService;
   	this.location = $location;
 
-  	this.init();
+  	this.init();	
   };
 
   LoginCtrl.prototype.init = function() {
@@ -14,15 +14,15 @@
   };
 
 	LoginCtrl.prototype.login = function(user) {
-		this.userService.login(user);
+		this.authService.login(user);
   };
 
 	LoginCtrl.prototype.registerNewUser = function(user) {
-		this.userService.registerNewUser(user)
+		this.authService.registerNewUser(user)
 	};
 
   LoginCtrl.prototype.checkForLoggedIn = function() {
-    if(this.userService.checkForLoggedIn()) {
+    if(this.authService.checkForLoggedIn()) {
     	this.location.path('/');
     }
   };

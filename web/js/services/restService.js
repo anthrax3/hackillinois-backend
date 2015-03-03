@@ -88,11 +88,11 @@
     }
   };
 
-  restService.prototype.getGroup = function(groupId, callback) {
+  restService.prototype.loadGroup = function(groupId, callback) {
     if (groupId != null) {
       this.http.get('/api/group/'+groupId, {}).
         error(function(data, status, headers, config) {
-          console.log("Couldn't find a group");
+          console.log("Couldn't load the group");
         }).
         success(function(data, status, headers, config) {
           data['id'] = groupId;
@@ -109,6 +109,46 @@
       success(function(data, status, headers, config) {
         console.log('Group removed with id: ' + groupId);
         callback();
+      });
+  };
+
+  restService.prototype.addUser = function(groupId, userId, userEmail, callback) {
+    this.checkUserExists(userId, function(exists) {
+      if (exists) {
+      this.http.post('/api/group/add-user/', {groupId: groupId, userId: userId}).
+        error(function(data, status, headers, config) {
+          console.log('Couldn\'t add user to group.');
+        }).
+        success(function(data, status, headers, config) {
+          console.log('Added user to group ' + groupId);
+          callback(true);
+        }.bind(this));
+      } else {
+        callback(false);
+      }
+    }.bind(this));
+  };
+
+  restService.prototype.removeUser = function(groupId, userId, callback) {
+    this.http.post('/api/group/remove-user/', {groupId: groupId, userId: userId}).
+      error(function(data, status, headers, config) {
+        console.log('Couldn\'t remove user to group.');
+      }).
+      success(function(data, status, headers, config) {
+        console.log('Removed user from group ' + groupId);
+        callback(true);
+      });
+  };
+
+  restService.prototype.checkUserExists = function(userId, callback) {
+    this.http.get('/api/user/exists/'+userId, {}).
+      error(function(data, status, headers, config) {
+        console.log('User does not exist.');
+        callback(false);
+      }).
+      success(function(data, status, headers, config) {
+        console.log('User exists!');
+        callback(true);
       });
   };
 

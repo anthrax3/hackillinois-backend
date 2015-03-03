@@ -2,9 +2,9 @@
 
 (function() {
   'use strict';
-  var DashCtrl = function(restService, userService, $location) {
-    this.restService = restService;
-    this.userService = userService;
+  var DashCtrl = function(dataService, authService, $location) {
+    this.dataService = dataService;
+    this.authService = authService;
 
     this.location = $location;
 
@@ -13,51 +13,62 @@
 
   DashCtrl.prototype.init = function() {
     this.checkForLoggedIn();
-    this.getUser();
+    this.loadUser(function() {
+      this.loadGroups();
+    }.bind(this));
   }
 
-  DashCtrl.prototype.getGroups = function() {
-    for(var group in this.user.groups) {
-      console.log("hej")
-      this.restService.getGroup(group, function(data) {
-        console.log(data)
-        if (this.groups == null) {
-          this.groups = [];
-        }
-        this.groups.push(data)
-      }.bind(this));
-    }
-  }
-
-  DashCtrl.prototype.getUser = function() {
-    this.restService.getUser(function(data) {
-      this.user = data;
+  DashCtrl.prototype.loadGroups = function() {
+    this.dataService.loadGroups(this.user.groups, function() {
       this.getGroups();
-    }.bind(this))
+    }.bind(this));
+  }
+
+  DashCtrl.prototype.loadUser = function(callback) {
+    this.dataService.loadUser(function() {
+      this.getUser();
+      callback();
+    }.bind(this));
   }
 
   DashCtrl.prototype.createGroup = function(groupName) { 
-    this.restService.createGroup(groupName, function(groupId) {
-      if (this.groups == null) {
-        this.groups = [];
-      }
-      this.groups.push({name: groupName, firstMember: this.user.id, id: groupId})
+    this.tempGroup = null; // CLEAR FIELDS
+    this.dataService.createGroup(groupName, function() {
+      this.getGroups();
     }.bind(this));
   };
 
-  DashCtrl.prototype.checkForLoggedIn = function() {
-    if(!this.userService.checkForLoggedIn()) {
-      this.location.path('/login');
-    }
+  DashCtrl.prototype.removeGroup = function(index) {
+    this.dataService.removeGroup(index, function() {
+      this.getGroups();
+    }.bind(this));
   };
 
-  DashCtrl.prototype.removeGroup = function(index) {
-    console.log('starting remove for index: ' + index);
-    if (this.groups != null) {
-      this.restService.removeGroup(this.groups[index].id, this.user.id, function() {
-        console.log('removing on index: ' + index);
-        this.groups.splice(index, 1);
-      }.bind(this));
+  DashCtrl.prototype.addUser = function(index, memberEmail) {
+    this.dataService.addUser(index, memberEmail, function(userExists) {
+      if (userExists) {
+        this.getGroups();
+      }
+    }.bind(this));
+  };
+
+  DashCtrl.prototype.removeUser = function(index, memberId) {
+    this.dataService.removeUser(index, memberId, function() {
+      this.getGroups();
+    }.bind(this));
+  };
+
+  DashCtrl.prototype.getUser = function() {
+    this.user = this.dataService.getUser();
+  };
+
+  DashCtrl.prototype.getGroups = function() {
+    this.groups = this.dataService.getGroups();
+  };
+
+  DashCtrl.prototype.checkForLoggedIn = function() {
+    if(!this.authService.checkForLoggedIn()) {
+      this.location.path('/login');
     }
   };
 

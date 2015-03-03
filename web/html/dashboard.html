@@ -1,12 +1,17 @@
 <h2 class="form-signin-heading">Dashboard</h2>
 <div ng-repeat="group in dashCtrl.groups" class="group-div">
 	<h1>{{group.name}}</h1>
-	<div ng-repeat="member in group.members"><p>{{	member}}</p></div>
+	<div ng-repeat="member in group.members">
+		<p>{{member}}</p>
+		<button ng-click="dashCtrl.removeUser($parent.$index, member)" class="btn btn-lg btn-danger btn-block">Remove member</button>	
+	</div>
+		<input type="id" class="form-control" placeholder="User ID" ng-model="memberEmail">
+		<button ng-click="dashCtrl.addUser($index, memberEmail)" class="btn btn-lg btn-primary btn-block">Add member</button>
 	<button ng-click="dashCtrl.removeGroup($index)" class="btn btn-lg btn-danger btn-block">Remove</button>
 </div>
 
 <form class="form-signin">
   <h2 class="form-signin-heading">Create a new group!</h2>
-  <input type="text" ng-model="group.name" class="form-control" placeholder="Group name" required="">
-  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup(group.name)">Create</button>
+  <input type="text" ng-model="dashCtrl.tempGroup.name" class="form-control" placeholder="Group name" required="">
+  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup(dashCtrl.tempGroup.name	)">Create</button>
 </form>

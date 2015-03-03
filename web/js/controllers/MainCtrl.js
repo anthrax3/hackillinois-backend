@@ -1,15 +1,15 @@
 (function() {
 	'use strict';
-	var MainCtrl = function(userService) {
-		this.userService = userService;
+	var MainCtrl = function(authService) {
+		this.authService = authService;
 	};
 
 	MainCtrl.prototype.logout = function(user) {
-		this.userService.logout();
+		this.authService.logout();
 	};
 
 	MainCtrl.prototype.isLoggedIn = function() {
-		return this.userService.getLoggedIn();
+		return this.authService.getLoggedIn();
 	};
 
 	hackIllinois.controller('MainCtrl', MainCtrl);
