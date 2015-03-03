@@ -24,7 +24,9 @@
 </head>
 <body ng-app="hackIllinois">
   <div class="main-body" ng-controller="MainCtrl as mainCtrl">
-    <h1 style="text-align: center;">Very cool Hack Illinois App</h1>
+    <h1 style="text-align: center;">
+      <div class="cool-text">Very cool Hack Illinois App</div>
+    </h1>
     <button class="btn btn-lg btn-primary btn-block" ng-click="mainCtrl.logout()" ng-show="mainCtrl.isLoggedIn()">Logout</button>
 
   	<div ng-view></div>

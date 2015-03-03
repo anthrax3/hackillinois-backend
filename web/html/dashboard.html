@@ -1,17 +1,35 @@
-<h2 class="form-signin-heading">Dashboard</h2>
-<div ng-repeat="group in dashCtrl.groups" class="group-div">
-	<h1>{{group.name}}</h1>
-	<div ng-repeat="member in group.members">
-		<p>{{member}}</p>
-		<button ng-click="dashCtrl.removeUser($parent.$index, member)" class="btn btn-lg btn-danger btn-block">Remove member</button>	
+<div class="panel panel-default">	
+	<div class="panel-body">
+		<form class="form-signin">
+		  <h2 class="form-signin-heading">Create a new group!</h2>
+		  <input type="text" ng-model="dashCtrl.tempGroup.name" class="form-control" placeholder="Group name" required="">
+		  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup(dashCtrl.tempGroup.name	)">Create</button>
+		</form>
 	</div>
-		<input type="id" class="form-control" placeholder="User ID" ng-model="memberEmail">
-		<button ng-click="dashCtrl.addUser($index, memberEmail)" class="btn btn-lg btn-primary btn-block">Add member</button>
-	<button ng-click="dashCtrl.removeGroup($index)" class="btn btn-lg btn-danger btn-block">Remove</button>
 </div>
-
-<form class="form-signin">
-  <h2 class="form-signin-heading">Create a new group!</h2>
-  <input type="text" ng-model="dashCtrl.tempGroup.name" class="form-control" placeholder="Group name" required="">
-  <button class="btn btn-lg btn-primary btn-block" ng-click="dashCtrl.createGroup(dashCtrl.tempGroup.name	)">Create</button>
-</form>
+<div ng-repeat="group in dashCtrl.groups">
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<h2>{{group.name}}</h2>
+		</div>
+		<table class="table">
+			<tr>
+				<th>Member</th>
+				<th>Remove</th>
+			</tr>
+			<tr ng-repeat="member in group.members">
+				<td>{{member}}</td>
+				<td>
+					<button ng-click="dashCtrl.removeUser($parent.$index, member)" class="btn btn-lg btn-danger btn-block glyphicon glyphicon-remove"></button>
+				</td>
+			</tr>
+		</table>
+		<div class="panel-body">
+			<h3>Add member</h3>
+			<input type="id" class="form-control" placeholder="User ID" ng-model="memberEmail">
+			<button ng-click="dashCtrl.addUser($index, memberEmail)" class="btn btn-lg btn-primary btn-block glyphicon glyphicon-plus"></button>
+			<h3>Remove group</h3>
+			<button ng-click="dashCtrl.removeGroup($index)" class="btn btn-lg btn-danger btn-block glyphicon glyphicon-remove"></button>
+		</div>
+	</div>
+</div>
