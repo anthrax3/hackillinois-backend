@@ -30,6 +30,7 @@
     }, function(error, userData) {
       if (error) {
         console.log("Error creating user:", error);
+        callback(error);
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
         this.ref.child('users/' + userData.uid).set({
@@ -48,6 +49,7 @@
     }, function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
+        callback(error);
       } else {
         console.log("Authenticated successfully with payload:", authData);
         callback();

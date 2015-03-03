@@ -19,12 +19,16 @@
   	}
   };
 
-	authService.prototype.login = function(user) {
-		this.restService.login(user, function() {
-			this.loggedIn = true;
-			console.log('abow');
+	authService.prototype.login = function(user, callback) {
+		this.restService.login(user, function(error) {
+      if (error) {
+        callback(error);
+      } else {
+        this.loggedIn = true;
+        this.location.path('/');
+        callback();
+      }
 			this.timeout(function () {
-				this.location.path('/bar');
 			}.bind(this));
 		}.bind(this));
   };
@@ -39,9 +43,15 @@
   	}
   }
 
-	authService.prototype.registerNewUser = function(user) {
-		this.restService.registerNewUser(user, function() {
-			this.login(user);
+	authService.prototype.registerNewUser = function(user, callback) {
+		this.restService.registerNewUser(user, function(error) {
+      if (!error) {
+        callback();
+        this.login(user, function() { //Empty function because we know login is gonna work
+        });
+      } else {
+        callback(error);
+      }
 		}.bind(this));
   };
 
