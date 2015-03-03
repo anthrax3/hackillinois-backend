@@ -8,6 +8,7 @@
 
     this.location = $location;
 
+    this.errorArray = [];
     this.init();
   };
 
@@ -45,9 +46,11 @@
   };
 
   DashCtrl.prototype.addUser = function(index, memberEmail) {
-    this.dataService.addUser(index, memberEmail, function(userExists) {
-      if (userExists) {
+    this.dataService.addUser(index, memberEmail, function(error) {
+      if (!error) {
         this.getGroups();
+      } else {
+        this.errorArray[index] = error.message;
       }
     }.bind(this));
   };
@@ -78,6 +81,10 @@
     if(!this.authService.checkForLoggedIn()) {
       this.location.path('/login');
     }
+  };
+
+  DashCtrl.prototype.resetError = function(index) {
+    this.errorArray[index] = null;
   };
 
   hackIllinois.controller('DashCtrl', DashCtrl);
