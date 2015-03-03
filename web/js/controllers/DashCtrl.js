@@ -58,6 +58,14 @@
     }.bind(this));
   };
 
+  DashCtrl.prototype.isUser = function(userId) {
+    if (userId == this.user.id) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   DashCtrl.prototype.getUser = function() {
     this.user = this.dataService.getUser();
   };
