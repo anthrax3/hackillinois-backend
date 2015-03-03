@@ -14,67 +14,55 @@
 
   DashCtrl.prototype.init = function() {
     this.checkForLoggedIn();
-    this.loadUser(function() {
-      this.loadGroups();
-    }.bind(this));
+    this.loadUserData();
   }
 
-  DashCtrl.prototype.loadGroups = function() {
-    this.dataService.loadGroups(this.user.groups, function() {
-      this.getGroups();
+  DashCtrl.prototype.loadUserData = function() {
+    this.dataService.loadUserData(function() {
+      this.getUserData();
     }.bind(this));
-  }
+  };
 
-  DashCtrl.prototype.loadUser = function(callback) {
-    this.dataService.loadUser(function() {
-      this.getUser();
-      callback();
-    }.bind(this));
-  }
+  DashCtrl.prototype.getUserData = function() {
+    this.userData = this.dataService.getUserData();
+    console.log(this.userData);
+  };
 
   DashCtrl.prototype.createGroup = function(groupName) { 
     this.tempGroup = null; // CLEAR FIELDS
     this.dataService.createGroup(groupName, function() {
-      this.getGroups();
+      this.getUserData();
     }.bind(this));
   };
 
   DashCtrl.prototype.removeGroup = function(index) {
     this.dataService.removeGroup(index, function() {
-      this.getGroups();
+      this.getUserData();
     }.bind(this));
   };
 
   DashCtrl.prototype.addUser = function(index, memberEmail) {
     this.dataService.addUser(index, memberEmail, function(error) {
       if (!error) {
-        this.getGroups();
+        this.getUserData();
       } else {
         this.errorArray[index] = error.message;
       }
     }.bind(this));
   };
 
-  DashCtrl.prototype.removeUser = function(index, memberId) {
-    this.dataService.removeUser(index, memberId, function() {
-      this.getGroups();
+  DashCtrl.prototype.removeUser = function(index, userId) {
+    this.dataService.removeUser(index, userId, function() {
+      this.getUserData();
     }.bind(this));
   };
 
   DashCtrl.prototype.isUser = function(userId) {
-    if (userId == this.user.id) {
+    if (userId == this.userData.user.id) {
       return true;
     } else {
       return false;
     }
-  };
-
-  DashCtrl.prototype.getUser = function() {
-    this.user = this.dataService.getUser();
-  };
-
-  DashCtrl.prototype.getGroups = function() {
-    this.groups = this.dataService.getGroups();
   };
 
   DashCtrl.prototype.checkForLoggedIn = function() {

@@ -13,7 +13,7 @@
 	  </form>
 	</div>
 </div>
-<div ng-repeat="group in dashCtrl.groups">
+<div ng-repeat="group in dashCtrl.userData.groups">
 	<div class="panel panel-success">	
 		<div class="panel-heading">
 			<h2>{{group.name}}</h2>
@@ -49,7 +49,7 @@
 			<div class="col-lg-6">
 		  	<form class="navbar-form navbar-left">
 		  		<h3>Leave group</h3>
-		    	<button ng-click="dashCtrl.removeUser($index, dashCtrl.user.id)" class="btn btn-danger glyphicon glyphicon-remove"></button>
+		    	<button ng-click="dashCtrl.removeUser($index, dashCtrl.userData.user.id)" class="btn btn-danger glyphicon glyphicon-remove"></button>
 		  	</form>
 		  </div>
 		</div>

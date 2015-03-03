@@ -2,8 +2,9 @@
 
 (function() {
   'use strict';
-  var authService = function(restService, $location, $timeout) {
+  var authService = function(restService, dataService, $location, $timeout) {
   	this.restService = restService;
+    this.dataService = dataService;
   	this.location = $location;
   	this.timeout = $timeout;
 
@@ -38,6 +39,7 @@
   		this.restService.logout();
   		this.loggedIn = false;
   		this.location.path("/login");
+      this.dataService.clearData();
   	} else {
   		console.log('Already logged out!');
   	}
