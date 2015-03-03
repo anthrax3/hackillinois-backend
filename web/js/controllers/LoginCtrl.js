@@ -19,7 +19,7 @@
   };
 
 	LoginCtrl.prototype.login = function(user) {
-    if (user.email == null || user.password == null) {
+    if (user.email == '' || user.email == null || user.password == '' || user.password == null) {
       this.loginError = 'You must fill in both fields.';
       return;
     }
@@ -36,7 +36,7 @@
   };
 
 	LoginCtrl.prototype.registerNewUser = function(user) {
-    if (user.email == null || user.password == null || user.username == null) {
+    if (user.email == '' || user.email == null || user.username == '' || user.username == null || user.password == '' || user.password == null) {
       this.registerError = 'You must fill in all fields.';
       return;
     }
